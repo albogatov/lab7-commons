@@ -2,10 +2,9 @@ package commons.app;
 
 import commons.commands.*;
 import commons.elements.Worker;
-//import server.interaction.InteractionInterface;
 import commons.utils.InteractionInterface;
 import commons.utils.UserInterface;
-//import server.Server;
+import server.Server;
 
 import java.net.InetAddress;
 import java.util.HashMap;
@@ -18,14 +17,14 @@ import java.util.stream.Collectors;
  * Класс отвечающий за распознование и вызов команд.
  */
 public class CommandCenter {
-//    private static final Logger logger = Logger.getLogger(
-//            Server.class.getName());
+    private static final Logger logger = Logger.getLogger(
+            Server.class.getName());
     private static InetAddress clientAddress;
     private static int clientPort;
     /**
      * Объект центра управления командами.
      */
-    public static CommandCenter commandCenter;
+    public static volatile CommandCenter commandCenter;
     /**
      * Список всех возможных команд.
      */
@@ -78,10 +77,16 @@ public class CommandCenter {
      * @return Объект центра управления командами.
      */
     public static CommandCenter getInstance() {
-        if (commandCenter == null)
-            return new CommandCenter();
+        if (commandCenter == null) {
+            synchronized (CommandCenter.class) {
+                if (commandCenter == null) {
+                    commandCenter = new CommandCenter();
+                }
+            }
+        }
         return commandCenter;
     }
+
 
     /**
      * Метод, возврашающий полный список всех команд.
@@ -100,43 +105,48 @@ public class CommandCenter {
      * @param interactiveStorage объект для взаимодействия с коллекцией.
      */
     public void executeCommand(UserInterface ui, String line, InteractionInterface interactiveStorage) {
-//        logger.log(Level.INFO, "Executing server command initiated by user's actions");
+        logger.log(Level.INFO, "Executing server command initiated by user's actions");
         Command cmd = getCmd(line);
         cmd.execute(ui, interactiveStorage, clientAddress, clientPort);
     }
 
     public void executeCommand(UserInterface ui, Command cmd, InteractionInterface interactiveStorage) {
-//        logger.log(Level.INFO, "Executing user command with no arguments");
+        logger.log(Level.INFO, "Executing user command with no arguments");
         cmd.execute(ui, interactiveStorage, clientAddress, clientPort);
     }
 
     public void executeCommand(UserInterface ui, Command cmd, String argument, InteractionInterface interactiveStorage) {
-//        logger.log(Level.INFO, "Executing user command with a string argument");
+        logger.log(Level.INFO, "Executing user command with a string argument");
         cmd.execute(ui, argument, interactiveStorage, clientAddress, clientPort);
     }
 
     public void executeCommand(UserInterface ui, Command cmd, InteractionInterface interactiveStorage, Worker worker) {
-//        logger.log(Level.INFO, "Executing user command with an object argument");
+        logger.log(Level.INFO, "Executing user command with an object argument");
         cmd.execute(ui, interactiveStorage, worker, clientAddress, clientPort);
     }
 
     public void executeCommand(UserInterface ui, Command cmd, String argument, InteractionInterface interactiveStorage, Worker worker) {
-//        logger.log(Level.INFO, "Executing user command with two arguments");
+        logger.log(Level.INFO, "Executing user command with two arguments");
         cmd.execute(ui, interactiveStorage, argument, worker, clientAddress, clientPort);
     }
 
+    public void executeCommand(UserInterface ui, Command cmd, boolean success) {
+        logger.log(Level.INFO, "Executing user command with two string arguments");
+        cmd.execute(ui, success, clientAddress, clientPort);
+    }
+
     public void executeServerCommand(Command cmd, InteractionInterface interactiveStorage) {
-//        logger.log(Level.INFO, "Executing server command");
+        logger.log(Level.INFO, "Executing server command");
         cmd.execute(interactiveStorage);
     }
 
     public static void setClientAddress(InetAddress address) {
-//        logger.log(Level.INFO, "Tying client's address to the command center");
+        logger.log(Level.INFO, "Tying client's address to the command center");
         clientAddress = address;
     }
 
     public static void setClientPort(int port) {
-//        logger.log(Level.INFO, "Tying client's port to the command center");
+        logger.log(Level.INFO, "Tying client's port to the command center");
         clientPort = port;
     }
 }

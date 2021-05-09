@@ -6,6 +6,8 @@ import commons.utils.UserInterface;
 
 import java.io.Serializable;
 import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Абстрактный класс, от которого наследуются все команды.
@@ -22,6 +24,7 @@ public abstract class Command implements Serializable {
     protected boolean needsObject;
     protected int argumentAmount;
     protected String argument;
+    protected String additionalArgument;
     protected Worker object;
 
     public void execute(UserInterface ui, InteractionInterface interactiveStorage, InetAddress address, int port) {
@@ -41,6 +44,10 @@ public abstract class Command implements Serializable {
     }
 
     public void execute(InteractionInterface interactionInterface) {
+
+    }
+
+    public void execute(UserInterface ui, boolean success, InetAddress clientAddress, int clientPort) {
 
     }
 
@@ -91,5 +98,14 @@ public abstract class Command implements Serializable {
 
     public String getArgument() {
         return this.argument;
+    }
+
+    public void setStringArgs(String arg1, String arg2) {
+        this.argument = arg1;
+        this.additionalArgument = arg2;
+    }
+
+    public String getAdditionalArgument() {
+        return this.additionalArgument;
     }
 }

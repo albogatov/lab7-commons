@@ -1,9 +1,9 @@
 package commons.utils;
 
 import commons.elements.*;
-//import server.commons.utils.ValueVerificationTool;
-//import server.Server;
+import server.Server;
 
+import java.io.Console;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
@@ -14,13 +14,16 @@ import java.security.InvalidParameterException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Класс, реализующий взаимодействие с пользователем.
  */
 public class UserInterface {
-//    private static final Logger logger = Logger.getLogger(
-//            Server.class.getName());
+    private static final Logger logger = Logger.getLogger(
+            Server.class.getName());
+    private final Console console;
     /**
      * Сканнер.
      */
@@ -46,6 +49,7 @@ public class UserInterface {
         this.writer = w;
         this.interactionMode = im;
         this.scanner = new Scanner(r);
+        this.console = System.console();
     }
 
     /**
@@ -171,6 +175,15 @@ public class UserInterface {
         return line;
     }
 
+    public String readPassword() {
+        String line = null;
+        while (line == null) {
+            displayMessage("Пожалуйста, введите пароль.");
+            line = new String(console.readPassword());
+            line = line.isEmpty() ? null : line;
+        }
+        return line;
+    }
     /**
      * Метод, считывающий сотрудника (объект коллекции) из строки.
      *
@@ -252,27 +265,27 @@ public class UserInterface {
     }
 
     public void connectToServer(DatagramSocket datagramSocket) {
-//        logger.log(Level.INFO, "Connecting user interface");
+        logger.log(Level.INFO, "Connecting user interface");
         this.datagramSocket = datagramSocket;
     }
 
     public DatagramSocket getConnection() {
-//        logger.log(Level.INFO, "Retrieving socket used by the UI");
+        logger.log(Level.INFO, "Retrieving socket used by the UI");
         return datagramSocket;
     }
 
     public void messageToClient(String message, InetAddress address, int port) {
-//        logger.log(Level.INFO, "Starting to send an answer to the client");
+        logger.log(Level.INFO, "Starting to send an answer to the client");
         try {
             byte[] toBeSent = SerializationTool.serializeObject(message);
             DatagramPacket out = null;
             if (toBeSent != null) {
                 out = new DatagramPacket(toBeSent, toBeSent.length, address, port);
             }
-//            logger.log(Level.INFO, "Sending answer");
+            logger.log(Level.INFO, "Sending answer");
             datagramSocket.send(out);
         } catch (IOException e) {
-//            logger.log(Level.INFO, "Answer sending failed");
+            logger.log(Level.INFO, "Answer sending failed");
             e.printStackTrace();
         }
     }
