@@ -3,6 +3,7 @@ package commons.app;
 import commons.elements.Worker;
 import commons.utils.InteractionInterface;
 import commons.utils.UserInterface;
+import server.utils.DataBaseCenter;
 
 import java.io.Serializable;
 import java.net.InetAddress;
@@ -35,11 +36,11 @@ public abstract class Command implements Serializable {
 
     }
 
-    public void execute(UserInterface ui, InteractionInterface interactiveStorage, Worker worker, InetAddress address, int port) {
+    public void execute(UserInterface ui, InteractionInterface interactiveStorage, Worker worker, InetAddress address, int port, DataBaseCenter dbc) {
 
     }
 
-    public void execute(UserInterface ui, InteractionInterface interactiveStorage, String argument, Worker worker, InetAddress address, int port) {
+    public void execute(UserInterface ui, InteractionInterface interactiveStorage, String argument, Worker worker, InetAddress address, int port, DataBaseCenter dbc) {
 
     }
 

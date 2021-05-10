@@ -5,6 +5,7 @@ import commons.elements.Worker;
 import commons.utils.InteractionInterface;
 import commons.utils.UserInterface;
 import server.Server;
+import server.utils.DataBaseCenter;
 
 import java.net.InetAddress;
 import java.util.HashMap;
@@ -120,14 +121,14 @@ public class CommandCenter {
         cmd.execute(ui, argument, interactiveStorage, clientAddress, clientPort);
     }
 
-    public void executeCommand(UserInterface ui, Command cmd, InteractionInterface interactiveStorage, Worker worker) {
+    public void executeCommand(UserInterface ui, Command cmd, InteractionInterface interactiveStorage, Worker worker, DataBaseCenter dbc) {
         logger.log(Level.INFO, "Executing user command with an object argument");
-        cmd.execute(ui, interactiveStorage, worker, clientAddress, clientPort);
+        cmd.execute(ui, interactiveStorage, worker, clientAddress, clientPort, dbc);
     }
 
-    public void executeCommand(UserInterface ui, Command cmd, String argument, InteractionInterface interactiveStorage, Worker worker) {
+    public void executeCommand(UserInterface ui, Command cmd, String argument, InteractionInterface interactiveStorage, Worker worker, DataBaseCenter dbc) {
         logger.log(Level.INFO, "Executing user command with two arguments");
-        cmd.execute(ui, interactiveStorage, argument, worker, clientAddress, clientPort);
+        cmd.execute(ui, interactiveStorage, argument, worker, clientAddress, clientPort, dbc);
     }
 
     public void executeCommand(UserInterface ui, Command cmd, boolean success) {

@@ -5,6 +5,7 @@ import commons.app.Command;
 import commons.utils.InteractionInterface;
 import commons.utils.UserInterface;
 import commons.elements.Worker;
+import server.utils.DataBaseCenter;
 
 import java.io.Serializable;
 import java.net.InetAddress;
@@ -29,10 +30,9 @@ public class Add extends Command implements Serializable {
      * @param ui                 объект, через который ведется взаимодействие с пользователем.
      * @param interactiveStorage объект для взаимодействия с коллекцией.
      */
-    public void execute(UserInterface ui, InteractionInterface interactiveStorage, Worker worker, InetAddress address, int port) {
-        int initSize = interactiveStorage.getSize();
+    public void execute(UserInterface ui, InteractionInterface interactiveStorage, Worker worker, InetAddress address, int port, DataBaseCenter dbc) {
         interactiveStorage.add(worker);
-        if (interactiveStorage.getSize() > initSize)
+        if (dbc.addWorker(worker))
             ui.messageToClient("Сотрудник успешно добавлен", address, port);
         else ui.messageToClient("Такой сотрудник уже добавлен", address, port);
         if (ui.isInteractionMode()) {

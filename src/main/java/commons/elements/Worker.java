@@ -167,6 +167,10 @@ public class Worker implements Comparable<Worker>, Serializable {
         return creationDate.format(formatter);
     }
 
+    public String getCreationDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ssXXX");
+        return creationDate.format(formatter);
+    }
     /**
      * Метод, возвращающий оклад сотрудника.
      *
@@ -184,8 +188,8 @@ public class Worker implements Comparable<Worker>, Serializable {
     public String getEndDateString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         if (this.endDate == null)
-            return "";
-        return this.endDate.format(formatter);
+            return "null";
+        return "'" + this.endDate.format(formatter) + "'";
     }
 
     /**
@@ -225,8 +229,8 @@ public class Worker implements Comparable<Worker>, Serializable {
      */
     public String getPositionString() {
         if (this.position == null)
-            return "";
-        else return this.position.toString();
+            return "null";
+        else return "'" + this.position.toString() + "'";
     }
 
     /**
@@ -236,8 +240,8 @@ public class Worker implements Comparable<Worker>, Serializable {
      */
     public String getStatusString() {
         if (getStatus() == null)
-            return "";
-        else return this.status.toString();
+            return "null";
+        else return "'" + this.status.toString() + "'";
     }
 
     /**
@@ -267,8 +271,8 @@ public class Worker implements Comparable<Worker>, Serializable {
      */
     public String getOrganizationNameString() {
         if (organization == null || organization.getOrganizationName() == null)
-            return "";
-        else return this.organization.getOrganizationName();
+            return "null";
+        else return "'" + this.organization.getOrganizationName() + "'";
     }
 
     /**
@@ -289,8 +293,8 @@ public class Worker implements Comparable<Worker>, Serializable {
      */
     public String getAnnualTurnoverString() {
         if (organization == null || organization.getAnnualTurnover() == null)
-            return "";
-        else return String.valueOf(organization.getAnnualTurnover());
+            return "null";
+        else return "'" + String.valueOf(organization.getAnnualTurnover()) + "'";
     }
 
     /**
@@ -311,8 +315,8 @@ public class Worker implements Comparable<Worker>, Serializable {
      */
     public String getOrganizationTypeString() {
         if (organization == null || organization.getOrganizationType() == null)
-            return "";
-        else return organization.getOrganizationType().toString();
+            return "null";
+        else return "'" + organization.getOrganizationType().toString() + "'";
     }
 
     /**
@@ -333,8 +337,8 @@ public class Worker implements Comparable<Worker>, Serializable {
      */
     public String getAddressStreet() {
         if (organization == null || organization.getPostalAddress() == null)
-            return "";
-        else return organization.getPostalAddress().getStreet();
+            return "null";
+        else return "'" + organization.getPostalAddress().getStreet() + "'";
     }
 
     /**
@@ -344,8 +348,8 @@ public class Worker implements Comparable<Worker>, Serializable {
      */
     public String getAddressZipCode() {
         if (organization == null || organization.getPostalAddress() == null)
-            return "";
-        else return organization.getPostalAddress().getZipCode();
+            return "null";
+        else return "'" + organization.getPostalAddress().getZipCode() + "'";
     }
     public void setCreationDate(ZonedDateTime creationDate) {
         this.creationDate = creationDate;
