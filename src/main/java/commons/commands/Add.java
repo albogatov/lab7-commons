@@ -32,9 +32,10 @@ public class Add extends Command implements Serializable {
      */
     public void execute(UserInterface ui, InteractionInterface interactiveStorage, Worker worker, InetAddress address, int port, DataBaseCenter dbc) {
         interactiveStorage.add(worker);
-        if (dbc.addWorker(worker))
+        if (dbc.addWorker(worker)) {
             ui.messageToClient("Сотрудник успешно добавлен", address, port);
-        else ui.messageToClient("Такой сотрудник уже добавлен", address, port);
+            dbc.retrieveCollectionFromDB(interactiveStorage);
+        } else ui.messageToClient("Такой сотрудник уже добавлен", address, port);
         if (ui.isInteractionMode()) {
             ui.messageToClient("Awaiting further client instructions.", address, port);
         }

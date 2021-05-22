@@ -4,6 +4,7 @@ import commons.app.Command;
 import commons.elements.Worker;
 import commons.utils.InteractionInterface;
 import commons.utils.UserInterface;
+import server.utils.DataBaseCenter;
 
 import java.net.InetAddress;
 
@@ -28,10 +29,14 @@ public class Update extends Command {
      * @param argument           необходимый для исполнения аргумент.
      * @param interactiveStorage объект для взаимодействия с коллекцией.
      */
-    public void execute(UserInterface ui, String argument, InteractionInterface interactiveStorage, Worker worker, InetAddress address, int port) {
+    public void execute(UserInterface ui, String argument, InteractionInterface interactiveStorage, Worker worker, InetAddress address, int port, DataBaseCenter dbc) {
+        System.out.println("Commencing");
         long id = Long.parseLong(argument);
-        if (interactiveStorage.findById(id)) {
+        if (interactiveStorage.findById(id) && dbc.updateWorker(worker, id)) {
+            System.out.println("Updating");
             interactiveStorage.update(id, worker);
+            dbc.retrieveCollectionFromDB(interactiveStorage);
+            System.out.println("Done");
             ui.messageToClient("Сотрудник обновлен", address, port);
         } else ui.messageToClient("Сотрудника с таким идентификатором нет", address, port);
         if (ui.isInteractionMode()) {

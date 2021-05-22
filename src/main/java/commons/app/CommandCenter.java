@@ -111,14 +111,14 @@ public class CommandCenter {
         cmd.execute(ui, interactiveStorage, clientAddress, clientPort);
     }
 
-    public void executeCommand(UserInterface ui, Command cmd, InteractionInterface interactiveStorage) {
+    public void executeCommand(UserInterface ui, Command cmd, InteractionInterface interactiveStorage, DataBaseCenter dataBaseCenter) {
         logger.log(Level.INFO, "Executing user command with no arguments");
-        cmd.execute(ui, interactiveStorage, clientAddress, clientPort);
+        cmd.execute(ui, interactiveStorage, clientAddress, clientPort, dataBaseCenter);
     }
 
-    public void executeCommand(UserInterface ui, Command cmd, String argument, InteractionInterface interactiveStorage) {
+    public void executeCommand(UserInterface ui, Command cmd, String argument, InteractionInterface interactiveStorage, DataBaseCenter dataBaseCenter) {
         logger.log(Level.INFO, "Executing user command with a string argument");
-        cmd.execute(ui, argument, interactiveStorage, clientAddress, clientPort);
+        cmd.execute(ui, argument, interactiveStorage, clientAddress, clientPort, dataBaseCenter);
     }
 
     public void executeCommand(UserInterface ui, Command cmd, InteractionInterface interactiveStorage, Worker worker, DataBaseCenter dbc) {
@@ -128,7 +128,7 @@ public class CommandCenter {
 
     public void executeCommand(UserInterface ui, Command cmd, String argument, InteractionInterface interactiveStorage, Worker worker, DataBaseCenter dbc) {
         logger.log(Level.INFO, "Executing user command with two arguments");
-        cmd.execute(ui, interactiveStorage, argument, worker, clientAddress, clientPort, dbc);
+        cmd.execute(ui, argument, interactiveStorage, worker, clientAddress, clientPort, dbc);
     }
 
     public void executeCommand(UserInterface ui, Command cmd, boolean success) {

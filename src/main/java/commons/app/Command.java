@@ -7,8 +7,6 @@ import server.utils.DataBaseCenter;
 
 import java.io.Serializable;
 import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Абстрактный класс, от которого наследуются все команды.
@@ -32,7 +30,11 @@ public abstract class Command implements Serializable {
 
     }
 
-    public void execute(UserInterface ui, String argument, InteractionInterface interactiveStorage, InetAddress address, int port) {
+    public void execute(UserInterface ui, InteractionInterface interactiveStorage, InetAddress address, int port, DataBaseCenter dbc) {
+
+    }
+
+    public void execute(UserInterface ui, String argument, InteractionInterface interactiveStorage, InetAddress address, int port, DataBaseCenter dbc) {
 
     }
 
@@ -40,7 +42,7 @@ public abstract class Command implements Serializable {
 
     }
 
-    public void execute(UserInterface ui, InteractionInterface interactiveStorage, String argument, Worker worker, InetAddress address, int port, DataBaseCenter dbc) {
+    public void execute(UserInterface ui, String argument, InteractionInterface interactiveStorage,  Worker worker, InetAddress address, int port, DataBaseCenter dbc) {
 
     }
 

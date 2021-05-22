@@ -4,6 +4,7 @@ import commons.app.Command;
 import commons.utils.InteractionInterface;
 
 import commons.utils.UserInterface;
+import server.utils.DataBaseCenter;
 
 import java.net.InetAddress;
 
@@ -28,11 +29,15 @@ public class RemoveById extends Command {
      * @param argument           необходимый для исполнения аргумент.
      * @param interactiveStorage объект для взаимодействия с коллекцией.
      */
-    public void execute(UserInterface ui, String argument, InteractionInterface interactiveStorage, InetAddress address, int port) {
+    public void execute(UserInterface ui, String argument, InteractionInterface interactiveStorage, InetAddress address, int port, DataBaseCenter dbc) {
         try {
             long id = Long.parseLong(argument);
-            if (interactiveStorage.findById(id)) {
+            interactiveStorage.getStorage().getIdList().stream().forEach(System.out::println);
+            if(interactiveStorage.findById(id))
+                System.out.println("FOUND");
+            if (interactiveStorage.findById(id) && dbc.removeWorker(id)) {
                 interactiveStorage.removeById(id);
+                dbc.retrieveCollectionFromDB(interactiveStorage);
                 ui.messageToClient("Сотрудник удален", address, port);
             } else ui.messageToClient("Сотрудник с таким id не найден", address, port);
             if (ui.isInteractionMode()) {

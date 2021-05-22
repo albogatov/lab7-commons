@@ -2,7 +2,9 @@ package commons.utils;
 
 import commons.elements.Status;
 import commons.elements.Worker;
+import server.interaction.Storage;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -41,4 +43,8 @@ public interface InteractionInterface {
     boolean findById(long key);
 
     String returnSeparator();
+
+    void addAll(HashSet<Worker> collection);
+
+    Storage getStorage();
 }

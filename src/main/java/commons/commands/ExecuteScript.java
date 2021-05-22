@@ -5,6 +5,7 @@ import commons.app.CommandCenter;
 import commons.elements.Worker;
 import commons.utils.InteractionInterface;
 import commons.utils.UserInterface;
+import server.utils.DataBaseCenter;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -43,7 +44,7 @@ public class ExecuteScript extends Command {
      * @param argument           необходимый для исполнения аргумент.
      * @param interactiveStorage объект для взаимодействия с коллекцией.
      */
-    public void execute(UserInterface ui, String argument, InteractionInterface interactiveStorage, InetAddress address, int port) {
+    public void execute(UserInterface ui, String argument, InteractionInterface interactiveStorage, InetAddress address, int port, DataBaseCenter dbc) {
 //        try {
 //            paths.add(argument);
 //            UserInterface scriptInteraction = new UserInterface(new FileReader(argument), new OutputStreamWriter(System.out), false);

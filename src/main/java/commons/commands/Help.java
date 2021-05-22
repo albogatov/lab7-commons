@@ -4,6 +4,7 @@ import commons.app.Command;
 import commons.app.CommandCenter;
 import commons.utils.InteractionInterface;
 import commons.utils.UserInterface;
+import server.utils.DataBaseCenter;
 
 import java.net.InetAddress;
 
@@ -27,7 +28,7 @@ public class Help extends Command {
      * @param ui                 объект, через который ведется взаимодействие с пользователем.
      * @param interactiveStorage объект для взаимодействия с коллекцией.
      */
-    public void execute(UserInterface ui, InteractionInterface interactiveStorage, InetAddress address, int port) {
+    public void execute(UserInterface ui, InteractionInterface interactiveStorage, InetAddress address, int port, DataBaseCenter dbc) {
         StringBuilder display = new StringBuilder();
         for (Command cmd : CommandCenter.getInstance().retrieveAllCommands()) {
             if (!cmd.getCommand().equals("save"))

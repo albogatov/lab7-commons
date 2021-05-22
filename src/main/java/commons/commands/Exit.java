@@ -3,6 +3,7 @@ package commons.commands;
 import commons.app.Command;
 import commons.utils.InteractionInterface;
 import commons.utils.UserInterface;
+import server.utils.DataBaseCenter;
 
 import java.net.InetAddress;
 
@@ -26,7 +27,7 @@ public class Exit extends Command {
      * @param ui                 объект, через который ведется взаимодействие с пользователем.
      * @param interactiveStorage объект для взаимодействия с коллекцией.
      */
-    public void execute(UserInterface ui, InteractionInterface interactiveStorage, InetAddress address, int port) {
+    public void execute(UserInterface ui, InteractionInterface interactiveStorage, InetAddress address, int port, DataBaseCenter dbc) {
         ui.messageToClient("До новых встреч", address, port);
 //        System.exit(0);
     }

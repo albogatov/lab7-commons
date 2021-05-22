@@ -4,6 +4,7 @@ import commons.app.Command;
 import commons.elements.Worker;
 import commons.utils.InteractionInterface;
 import commons.utils.UserInterface;
+import server.utils.DataBaseCenter;
 
 import java.net.InetAddress;
 
@@ -27,12 +28,14 @@ public class RemoveLower extends Command {
      * @param ui                 объект, через который ведется взаимодействие с пользователем.
      * @param interactiveStorage объект для взаимодействия с коллекцией.
      */
-    public void execute(UserInterface ui, InteractionInterface interactiveStorage, Worker worker, InetAddress address, int port) {
+    public void execute(UserInterface ui, InteractionInterface interactiveStorage, Worker worker, InetAddress address, int port, DataBaseCenter dbc) {
         int size1 = interactiveStorage.getSize();
         interactiveStorage.removeLower(worker);
         int size2 = interactiveStorage.getSize();
-        if (size2 < size1)
+        if ((size2 < size1) && dbc.removeWorker(worker.getId())) {
+            dbc.retrieveCollectionFromDB(interactiveStorage);
             ui.messageToClient("Операция успешно выполнена", address, port);
+        }
         if (ui.isInteractionMode()) {
             ui.messageToClient("Awaiting further client instructions.", address, port);
         }
