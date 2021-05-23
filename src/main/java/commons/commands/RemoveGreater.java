@@ -8,6 +8,8 @@ import commons.utils.UserInterface;
 import server.utils.DataBaseCenter;
 
 import java.net.InetAddress;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Класс команды remove_greater.
@@ -31,13 +33,20 @@ public class RemoveGreater extends Command {
      */
     public void execute(UserInterface ui, InteractionInterface interactiveStorage, Worker worker, InetAddress address, int port, DataBaseCenter dbc, User user) {
         int size1 = interactiveStorage.getSize();
+        List<Long> deletionIds = interactiveStorage.removeGreater(worker);
         interactiveStorage.removeGreater(worker);
         int size2 = interactiveStorage.getSize();
         if (size2 < size1) {
-            if (dbc.removeWorker(worker.getId(), user))
-                ui.messageToClient("Операция успешно выполнена", address, port);
-            else
-                ui.messageToClient("Произошла ошибка при удалении", address, port);
+            for (Long deletionId : deletionIds) {
+                if (dbc.removeWorker(deletionId, user))
+                    ui.messageToClient("Операция успешно выполнена", address, port);
+                else
+                    ui.messageToClient("Не удалось удалить элемент", address, port);
+            }
+//            if (dbc.removeWorker(worker.getId(), user))
+//                ui.messageToClient("Операция успешно выполнена", address, port);
+//            else
+//                ui.messageToClient("Произошла ошибка при удалении", address, port);
             dbc.retrieveCollectionFromDB(interactiveStorage);
         }
         if (ui.isInteractionMode()) {

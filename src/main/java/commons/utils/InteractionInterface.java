@@ -28,9 +28,9 @@ public interface InteractionInterface {
 
     void addIfMin(Worker worker);
 
-    void removeGreater(Worker worker);
+    List<Long> removeGreater(Worker worker);
 
-    void removeLower(Worker worker);
+    List<Long> removeLower(Worker worker);
 
     long countByStatus(Status status);
 
