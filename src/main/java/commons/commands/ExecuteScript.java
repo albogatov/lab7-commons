@@ -2,6 +2,7 @@ package commons.commands;
 
 import commons.app.Command;
 import commons.app.CommandCenter;
+import commons.app.User;
 import commons.elements.Worker;
 import commons.utils.InteractionInterface;
 import commons.utils.UserInterface;
@@ -44,7 +45,7 @@ public class ExecuteScript extends Command {
      * @param argument           необходимый для исполнения аргумент.
      * @param interactiveStorage объект для взаимодействия с коллекцией.
      */
-    public void execute(UserInterface ui, String argument, InteractionInterface interactiveStorage, InetAddress address, int port, DataBaseCenter dbc) {
+    public void execute(UserInterface ui, String argument, InteractionInterface interactiveStorage, InetAddress address, int port, DataBaseCenter dbc, User user) {
 //        try {
 //            paths.add(argument);
 //            UserInterface scriptInteraction = new UserInterface(new FileReader(argument), new OutputStreamWriter(System.out), false);

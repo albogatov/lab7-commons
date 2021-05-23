@@ -1,6 +1,7 @@
 package commons.commands;
 
 import commons.app.Command;
+import commons.app.User;
 import commons.utils.InteractionInterface;
 
 import commons.utils.UserInterface;
@@ -29,13 +30,13 @@ public class RemoveById extends Command {
      * @param argument           необходимый для исполнения аргумент.
      * @param interactiveStorage объект для взаимодействия с коллекцией.
      */
-    public void execute(UserInterface ui, String argument, InteractionInterface interactiveStorage, InetAddress address, int port, DataBaseCenter dbc) {
+    public void execute(UserInterface ui, String argument, InteractionInterface interactiveStorage, InetAddress address, int port, DataBaseCenter dbc, User user) {
         try {
             long id = Long.parseLong(argument);
             interactiveStorage.getStorage().getIdList().stream().forEach(System.out::println);
             if(interactiveStorage.findById(id))
                 System.out.println("FOUND");
-            if (interactiveStorage.findById(id) && dbc.removeWorker(id)) {
+            if (interactiveStorage.findById(id) && dbc.removeWorker(id, user)) {
                 interactiveStorage.removeById(id);
                 dbc.retrieveCollectionFromDB(interactiveStorage);
                 ui.messageToClient("Сотрудник удален", address, port);

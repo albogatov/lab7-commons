@@ -1,6 +1,7 @@
 package commons.commands;
 
 import commons.app.Command;
+import commons.app.User;
 import commons.elements.Worker;
 import commons.utils.InteractionInterface;
 import commons.utils.UserInterface;
@@ -28,13 +29,16 @@ public class RemoveLower extends Command {
      * @param ui                 объект, через который ведется взаимодействие с пользователем.
      * @param interactiveStorage объект для взаимодействия с коллекцией.
      */
-    public void execute(UserInterface ui, InteractionInterface interactiveStorage, Worker worker, InetAddress address, int port, DataBaseCenter dbc) {
+    public void execute(UserInterface ui, InteractionInterface interactiveStorage, Worker worker, InetAddress address, int port, DataBaseCenter dbc, User user) {
         int size1 = interactiveStorage.getSize();
         interactiveStorage.removeLower(worker);
         int size2 = interactiveStorage.getSize();
-        if ((size2 < size1) && dbc.removeWorker(worker.getId())) {
+        if (size2 < size1) {
+            if (dbc.removeWorker(worker.getId(), user))
+                ui.messageToClient("Операция успешно выполнена", address, port);
+            else
+                ui.messageToClient("Произошла ошибка при удалении", address, port);
             dbc.retrieveCollectionFromDB(interactiveStorage);
-            ui.messageToClient("Операция успешно выполнена", address, port);
         }
         if (ui.isInteractionMode()) {
             ui.messageToClient("Awaiting further client instructions.", address, port);

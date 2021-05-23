@@ -1,6 +1,7 @@
 package commons.commands;
 
 import commons.app.Command;
+import commons.app.User;
 import commons.elements.Status;
 import commons.utils.InteractionInterface;
 import commons.utils.UserInterface;
@@ -29,7 +30,7 @@ public class CountByStatus extends Command {
      * @param argument           необходимый для исполнения аргумент
      * @param interactiveStorage объект для взаимодействия с коллекцией
      */
-    public void execute(UserInterface ui, String argument, InteractionInterface interactiveStorage, InetAddress address, int port, DataBaseCenter dbc) {
+    public void execute(UserInterface ui, String argument, InteractionInterface interactiveStorage, InetAddress address, int port, DataBaseCenter dbc, User user) {
         try {
             Status status = Status.valueOf(argument.toUpperCase());
             long result = interactiveStorage.countByStatus(status);

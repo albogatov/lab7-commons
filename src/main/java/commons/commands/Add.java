@@ -2,6 +2,7 @@ package commons.commands;
 
 import commons.app.Command;
 //import server.interaction.InteractionInterface;
+import commons.app.User;
 import commons.utils.InteractionInterface;
 import commons.utils.UserInterface;
 import commons.elements.Worker;
@@ -30,9 +31,9 @@ public class Add extends Command implements Serializable {
      * @param ui                 объект, через который ведется взаимодействие с пользователем.
      * @param interactiveStorage объект для взаимодействия с коллекцией.
      */
-    public void execute(UserInterface ui, InteractionInterface interactiveStorage, Worker worker, InetAddress address, int port, DataBaseCenter dbc) {
+    public void execute(UserInterface ui, InteractionInterface interactiveStorage, Worker worker, InetAddress address, int port, DataBaseCenter dbc, User user) {
         interactiveStorage.add(worker);
-        if (dbc.addWorker(worker)) {
+        if (dbc.addWorker(worker, user)) {
             ui.messageToClient("Сотрудник успешно добавлен", address, port);
             dbc.retrieveCollectionFromDB(interactiveStorage);
         } else ui.messageToClient("Такой сотрудник уже добавлен", address, port);

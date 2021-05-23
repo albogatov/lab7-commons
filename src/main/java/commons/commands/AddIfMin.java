@@ -1,6 +1,7 @@
 package commons.commands;
 
 import commons.app.Command;
+import commons.app.User;
 import commons.elements.Worker;
 import commons.utils.InteractionInterface;
 import commons.utils.UserInterface;
@@ -28,11 +29,11 @@ public class AddIfMin extends Command {
      * @param ui                 объект, через который ведется взаимодействие с пользователем.
      * @param interactiveStorage объект для взаимодействия с коллекцией.
      */
-    public void execute(UserInterface ui, InteractionInterface interactiveStorage, Worker worker, InetAddress address, int port, DataBaseCenter dbc) {
+    public void execute(UserInterface ui, InteractionInterface interactiveStorage, Worker worker, InetAddress address, int port, DataBaseCenter dbc, User user) {
         int size1 = interactiveStorage.getSize();
         interactiveStorage.addIfMin(worker);
         int size2 = interactiveStorage.getSize();
-        if ((size2 > size1) && dbc.addWorker(worker)) {
+        if ((size2 > size1) && dbc.addWorker(worker, user)) {
             ui.messageToClient("Элемент успешно добавлен", address, port);
             dbc.retrieveCollectionFromDB(interactiveStorage);
         }

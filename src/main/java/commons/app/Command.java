@@ -23,26 +23,26 @@ public abstract class Command implements Serializable {
     protected boolean needsObject;
     protected int argumentAmount;
     protected String argument;
-    protected String additionalArgument;
+    protected User user;
     protected Worker object;
 
     public void execute(UserInterface ui, InteractionInterface interactiveStorage, InetAddress address, int port) {
 
     }
 
-    public void execute(UserInterface ui, InteractionInterface interactiveStorage, InetAddress address, int port, DataBaseCenter dbc) {
+    public void execute(UserInterface ui, InteractionInterface interactiveStorage, InetAddress address, int port, DataBaseCenter dbc, User user) {
 
     }
 
-    public void execute(UserInterface ui, String argument, InteractionInterface interactiveStorage, InetAddress address, int port, DataBaseCenter dbc) {
+    public void execute(UserInterface ui, String argument, InteractionInterface interactiveStorage, InetAddress address, int port, DataBaseCenter dbc, User user) {
 
     }
 
-    public void execute(UserInterface ui, InteractionInterface interactiveStorage, Worker worker, InetAddress address, int port, DataBaseCenter dbc) {
+    public void execute(UserInterface ui, InteractionInterface interactiveStorage, Worker worker, InetAddress address, int port, DataBaseCenter dbc, User user) {
 
     }
 
-    public void execute(UserInterface ui, String argument, InteractionInterface interactiveStorage,  Worker worker, InetAddress address, int port, DataBaseCenter dbc) {
+    public void execute(UserInterface ui, String argument, InteractionInterface interactiveStorage, Worker worker, InetAddress address, int port, DataBaseCenter dbc, User user) {
 
     }
 
@@ -103,12 +103,11 @@ public abstract class Command implements Serializable {
         return this.argument;
     }
 
-    public void setStringArgs(String arg1, String arg2) {
-        this.argument = arg1;
-        this.additionalArgument = arg2;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public String getAdditionalArgument() {
-        return this.additionalArgument;
+    public User getUser() {
+        return this.user;
     }
 }

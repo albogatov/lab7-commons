@@ -1,6 +1,7 @@
 package commons.commands;
 
 import commons.app.Command;
+import commons.app.User;
 import commons.utils.InteractionInterface;
 import commons.utils.UserInterface;
 import server.utils.DataBaseCenter;
@@ -27,7 +28,7 @@ public class Show extends Command {
      * @param ui                 объект, через который ведется взаимодействие с пользователем.
      * @param interactiveStorage объект для взаимодействия с коллекцией.
      */
-    public void execute(UserInterface ui, InteractionInterface interactiveStorage, InetAddress address, int port, DataBaseCenter dbc) {
+    public void execute(UserInterface ui, InteractionInterface interactiveStorage, InetAddress address, int port, DataBaseCenter dbc, User user) {
         if (interactiveStorage.getSize() == 0)
             ui.messageToClient("Коллекция пуста", address, port);
         else {

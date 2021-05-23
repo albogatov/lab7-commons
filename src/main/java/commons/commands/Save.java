@@ -1,6 +1,7 @@
 package commons.commands;
 
 import commons.app.Command;
+import commons.app.User;
 import commons.utils.InteractionInterface;
 import commons.utils.UserInterface;
 
@@ -26,7 +27,7 @@ public class Save extends Command {
      * @param ui                 объект, через который ведется взаимодействие с пользователем.
      * @param interactiveStorage объект для взаимодействия с коллекцией.
      */
-    public void execute(UserInterface ui, InteractionInterface interactiveStorage, InetAddress address, int port) {
+    public void execute(UserInterface ui, InteractionInterface interactiveStorage, InetAddress address, int port, User user) {
         interactiveStorage.save();
         ui.messageToClient("Коллекция сохранена в файл", address, port);
         if (ui.isInteractionMode()) {
