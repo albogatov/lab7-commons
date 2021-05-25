@@ -21,6 +21,7 @@ public class CountByStatus extends Command {
         description = "вывести количество элементов, значение поля status которых равно заданному";
         needsObject = false;
         argumentAmount = 1;
+        editsCollection = false;
     }
 
     /**

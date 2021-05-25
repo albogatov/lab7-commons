@@ -21,6 +21,7 @@ public class RemoveById extends Command {
         description = "удалить элемент из коллекции по его id";
         needsObject = false;
         argumentAmount = 1;
+        editsCollection = true;
     }
 
     /**

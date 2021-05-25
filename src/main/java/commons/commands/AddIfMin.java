@@ -21,6 +21,7 @@ public class AddIfMin extends Command {
         description = "добавить новый элемент в коллекцию, если его значение меньше, чем у наименьшего элемента этой коллекции.";
         needsObject = true;
         argumentAmount = 1;
+        editsCollection = true;
     }
 
     /**

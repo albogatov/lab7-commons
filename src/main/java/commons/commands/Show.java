@@ -20,6 +20,7 @@ public class Show extends Command {
         description = "вывести в стандартный поток вывода все элементы коллекции в строковом представлении";
         needsObject = false;
         argumentAmount = 0;
+        editsCollection = false;
     }
 
     /**

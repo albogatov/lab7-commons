@@ -22,6 +22,7 @@ public class RemoveLower extends Command {
         description = "удалить из коллекции все элементы, меньшие, чем заданный";
         needsObject = true;
         argumentAmount = 1;
+        editsCollection = true;
     }
 
     /**

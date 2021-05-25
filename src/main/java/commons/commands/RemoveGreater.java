@@ -23,6 +23,7 @@ public class RemoveGreater extends Command {
         description = "удалить из коллекции все элементы, превышающие заданный";
         needsObject = true;
         argumentAmount = 1;
+        editsCollection = true;
     }
 
     /**

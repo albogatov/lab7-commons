@@ -20,6 +20,7 @@ public class Info extends Command {
         description = "вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)";
         needsObject = false;
         argumentAmount = 0;
+        editsCollection = false;
     }
 
     /**

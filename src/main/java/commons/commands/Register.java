@@ -16,6 +16,5 @@ public class Register extends Command {
         if (success)
             ui.messageToClient("Регистрация успешна!", clientAddress, clientPort);
         else ui.messageToClient("Регистрация не удалась.", clientAddress, clientPort);
-        ui.messageToClient("Awaiting further client instructions.", clientAddress, clientPort);
     }
 }

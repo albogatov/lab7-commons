@@ -25,8 +25,9 @@ public abstract class Command implements Serializable {
     protected String argument;
     protected User user;
     protected Worker object;
+    protected boolean editsCollection;
 
-    public void execute(UserInterface ui, InteractionInterface interactiveStorage, InetAddress address, int port) {
+    public void execute(UserInterface ui, InteractionInterface interactiveStorage, InetAddress address, int port, User user) {
 
     }
 
@@ -109,5 +110,9 @@ public abstract class Command implements Serializable {
 
     public User getUser() {
         return this.user;
+    }
+
+    public boolean isEditsCollection() {
+        return this.editsCollection;
     }
 }

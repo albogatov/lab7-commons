@@ -20,6 +20,7 @@ public class PrintAscending extends Command {
         description = "вывести элементы коллекции в порядке возрастания";
         needsObject = false;
         argumentAmount = 0;
+        editsCollection = false;
     }
 
     /**

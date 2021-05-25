@@ -19,6 +19,7 @@ public class Save extends Command {
         description = "сохранить коллекцию в файл";
         needsObject = false;
         argumentAmount = 0;
+        editsCollection = false;
     }
 
     /**

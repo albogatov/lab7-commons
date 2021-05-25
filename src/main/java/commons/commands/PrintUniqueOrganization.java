@@ -21,6 +21,7 @@ public class PrintUniqueOrganization extends Command {
         description = "вывести уникальные значения поля organization всех элементов в коллекции";
         needsObject = false;
         argumentAmount = 0;
+        editsCollection = false;
     }
 
     /**

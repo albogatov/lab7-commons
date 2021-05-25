@@ -37,6 +37,7 @@ public class ExecuteScript extends Command {
         description = "считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме";
         needsObject = false;
         argumentAmount = 1;
+        editsCollection = false;
     }
 
     /**
@@ -60,6 +61,8 @@ public class ExecuteScript extends Command {
                     scriptInteraction.messageToClient("Данная команда недоступна пользователю", address, port);
                 } else {
                     Command cmd = CommandCenter.getInstance().getCmd(args[0]);
+                    if (cmd.getClass().toString().contains(".Login") || cmd.getClass().toString().contains(".Register"))
+                        throw new InvalidParameterException();
                     cmd.setUser(user);
                     if (!(cmd == null)) {
                         if (cmd.getArgumentAmount() == 0) {

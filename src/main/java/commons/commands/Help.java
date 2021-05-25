@@ -21,6 +21,7 @@ public class Help extends Command {
         description = "Вывести справку по доступным командам";
         needsObject = false;
         argumentAmount = 0;
+        editsCollection = false;
     }
 
     /**

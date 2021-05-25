@@ -19,6 +19,7 @@ public class Exit extends Command {
         description = "выход из программы";
         needsObject = false;
         argumentAmount = 0;
+        editsCollection = false;
     }
 
     /**

@@ -16,6 +16,5 @@ public class Login extends Command {
         if (success)
             ui.messageToClient("Вход в систему успешен!", clientAddress, clientPort);
         else ui.messageToClient("Вход в систему не удался.", clientAddress, clientPort);
-        ui.messageToClient("Awaiting further client instructions.", clientAddress, clientPort);
     }
 }

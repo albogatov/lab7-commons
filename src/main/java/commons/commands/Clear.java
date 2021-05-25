@@ -20,6 +20,7 @@ public class Clear extends Command {
         description = "очистить коллекцию";
         needsObject = false;
         argumentAmount = 0;
+        editsCollection = true;
     }
 
     /**

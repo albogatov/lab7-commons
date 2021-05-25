@@ -46,6 +46,7 @@ public class ValueVerificationTool {
      */
     public static boolean verifySalary(String value, boolean interactionMode, UserInterface ui) {
         try {
+//            System.out.println("veryfication");
             Integer.parseInt(value);
             return true;
         } catch (NumberFormatException e) {

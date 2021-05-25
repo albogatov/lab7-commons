@@ -23,6 +23,7 @@ public class Add extends Command implements Serializable {
         description = "Добавить новый элемент в коллекцию.";
         needsObject = true;
         argumentAmount = 1;
+        editsCollection = true;
     }
 
     /**
@@ -33,12 +34,15 @@ public class Add extends Command implements Serializable {
      */
     public void execute(UserInterface ui, InteractionInterface interactiveStorage, Worker worker, InetAddress address, int port, DataBaseCenter dbc, User user) {
         interactiveStorage.add(worker);
-        if (dbc.addWorker(worker, user)) {
-            ui.messageToClient("Сотрудник успешно добавлен", address, port);
-            dbc.retrieveCollectionFromDB(interactiveStorage);
-        } else ui.messageToClient("Такой сотрудник уже добавлен", address, port);
-        if (ui.isInteractionMode()) {
-            ui.messageToClient("Awaiting further client instructions.", address, port);
-        }
+        Thread response = new Thread(() -> {
+            if (dbc.addWorker(worker, user)) {
+                ui.messageToClient("Сотрудник успешно добавлен", address, port);
+                dbc.retrieveCollectionFromDB(interactiveStorage);
+            } else ui.messageToClient("Такой сотрудник уже добавлен", address, port);
+            if (ui.isInteractionMode()) {
+                ui.messageToClient("Awaiting further client instructions.", address, port);
+            }
+        });
+        response.start();
     }
 }

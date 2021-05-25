@@ -3,10 +3,7 @@ package commons.utils;
 import commons.elements.*;
 import server.Server;
 
-import java.io.Console;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
+import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -134,15 +131,19 @@ public class UserInterface {
      * @param max     максимальное значение.
      * @return введенный аргумент.
      */
-    public String readLimitedArgument(String message, long min, long max, boolean nullable) {
+    public String readLimitedArgument(String message, long min, long max, boolean nullable) throws InterruptedIOException {
         String line = null;
         if (!nullable) {
             if (interactionMode) {
-                while (line == null || Long.parseLong(line) < min || Long.parseLong(line) > max) {
-                    displayMessage("Ввод данного поля не может быть пустым и должен быть в указанном диапазоне: [" + min + ":" + max + "]");
-                    displayMessage(message);
-                    line = scanner.nextLine();
-                    line = line.isEmpty() ? null : line;
+                try {
+                    while (line == null || Long.parseLong(line) < min || Long.parseLong(line) > max) {
+                        displayMessage("Ввод данного поля не может быть пустым и должен быть в указанном диапазоне: [" + min + ":" + max + "]");
+                        displayMessage(message);
+                        line = scanner.nextLine();
+                        line = line.isEmpty() ? null : line;
+                    }
+                } catch (NumberFormatException e) {
+                    throw new InterruptedIOException();
                 }
             } else {
                 line = scanner.nextLine();
@@ -175,21 +176,23 @@ public class UserInterface {
         return line;
     }
 
-    public String readPassword() {
-        String line = null;
-        while (line == null) {
-            displayMessage("Пожалуйста, введите пароль.");
-            line = new String(console.readPassword());
-            line = line.isEmpty() ? null : line;
-        }
-        return line;
-    }
+//    public String readPassword() {
+//        String line = null;
+//        while (line == null) {
+//            displayMessage("Пожалуйста, введите пароль.");
+//            line = new String(console.readPassword());
+//            line = line.isEmpty() ? null : line;
+//        }
+//        return line;
+//    }
+
     /**
      * Метод, считывающий сотрудника (объект коллекции) из строки.
      *
      * @return объект коллекции.
      */
     public Worker readWorker(UserInterface ui) {
+//        boolean check = false;
         String name;
         do {
             name = readUnlimitedArgument("Введите имя рабочего:", false);
@@ -198,7 +201,11 @@ public class UserInterface {
 //        ZonedDateTime creationDate = ZonedDateTime.now();
         String salaryString;
         do {
-            salaryString = readLimitedArgument("Введите оклад рабочего:", 1, Integer.MAX_VALUE, false);
+            try {
+                salaryString = readLimitedArgument("Введите оклад рабочего:", 1, Integer.MAX_VALUE, false);
+            } catch (InterruptedIOException e) {
+                salaryString = null;
+            }
         } while (!ValueVerificationTool.verifySalary(salaryString, interactionMode, ui));
         Integer salary = Integer.parseInt(salaryString);
         String endDateLine;
@@ -212,10 +219,18 @@ public class UserInterface {
         String xLine;
         String yLine;
         do {
-            xLine = readLimitedArgument("Введите x координату сотрудника:", Integer.MIN_VALUE, 627, false);
+            try {
+                xLine = readLimitedArgument("Введите x координату сотрудника:", Integer.MIN_VALUE, 627, false);
+            } catch (InterruptedIOException e) {
+                xLine = null;
+            }
         } while (!ValueVerificationTool.verifyIntValue(xLine, interactionMode, ui, false));
         do {
-            yLine = readLimitedArgument("Введите y координату сотрудника:", Long.MIN_VALUE, 990, false);
+            try {
+                yLine = readLimitedArgument("Введите y координату сотрудника:", Long.MIN_VALUE, 990, false);
+            } catch (InterruptedIOException e) {
+                yLine = null;
+            }
         } while (!ValueVerificationTool.verifyLongValue(xLine, interactionMode, ui, false));
         int x = Integer.parseInt(xLine);
         long y = Long.parseLong(yLine);
@@ -243,7 +258,11 @@ public class UserInterface {
         String annualTurnoverLine;
         Long annualTurnover;
         do {
-            annualTurnoverLine = readLimitedArgument("Введите годовую выручку компании:", 1, Long.MAX_VALUE, true);
+            try {
+                annualTurnoverLine = readLimitedArgument("Введите годовую выручку компании:", 1, Long.MAX_VALUE, true);
+            } catch (InterruptedIOException e) {
+                annualTurnoverLine = null;
+            }
         } while (!ValueVerificationTool.verifyLongValue(annualTurnoverLine, interactionMode, ui, true));
         if (annualTurnoverLine == null)
             annualTurnover = null;
