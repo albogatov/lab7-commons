@@ -5,7 +5,7 @@ import commons.app.User;
 import commons.utils.InteractionInterface;
 
 import commons.utils.UserInterface;
-import server.utils.DataBaseCenter;
+import commons.utils.DataBaseCenter;
 
 import java.net.InetAddress;
 
@@ -32,24 +32,26 @@ public class RemoveById extends Command {
      * @param interactiveStorage объект для взаимодействия с коллекцией.
      */
     public void execute(UserInterface ui, String argument, InteractionInterface interactiveStorage, InetAddress address, int port, DataBaseCenter dbc, User user) {
-        try {
-            long id = Long.parseLong(argument);
-            interactiveStorage.getStorage().getIdList().stream().forEach(System.out::println);
-            if(interactiveStorage.findById(id))
-                System.out.println("FOUND");
-            if (interactiveStorage.findById(id) && dbc.removeWorker(id, user)) {
-                interactiveStorage.removeById(id);
-                dbc.retrieveCollectionFromDB(interactiveStorage);
-                ui.messageToClient("Сотрудник удален", address, port);
-            } else ui.messageToClient("Сотрудник с таким id не найден", address, port);
-            if (ui.isInteractionMode()) {
-                ui.messageToClient("Awaiting further client instructions.", address, port);
+        Thread response = new Thread(() -> {
+            try {
+                long id = Long.parseLong(argument);
+                if (interactiveStorage.findById(id))
+                    if (interactiveStorage.findById(id) && dbc.removeWorker(id, user)) {
+                        interactiveStorage.removeById(id);
+                        dbc.retrieveCollectionFromDB(interactiveStorage);
+                        ui.messageToClient("Сотрудник удален", address, port);
+                    } else
+                        ui.messageToClient("Сотрудник с таким id не найден или вы не имеете право его редактировать", address, port);
+                if (ui.isInteractionMode()) {
+                    ui.messageToClient("Awaiting further client instructions.", address, port);
+                }
+            } catch (NumberFormatException e) {
+                ui.messageToClient("Введен неверный аргумент команды", address, port);
+                if (ui.isInteractionMode()) {
+                    ui.messageToClient("Awaiting further client instructions.", address, port);
+                }
             }
-        } catch (NumberFormatException e) {
-            ui.messageToClient("Введен неверный аргумент команды", address, port);
-            if (ui.isInteractionMode()) {
-                ui.messageToClient("Awaiting further client instructions.", address, port);
-            }
-        }
+        });
+        response.start();
     }
 }

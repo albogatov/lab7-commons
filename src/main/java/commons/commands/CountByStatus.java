@@ -5,7 +5,7 @@ import commons.app.User;
 import commons.elements.Status;
 import commons.utils.InteractionInterface;
 import commons.utils.UserInterface;
-import server.utils.DataBaseCenter;
+import commons.utils.DataBaseCenter;
 
 import java.net.InetAddress;
 
@@ -32,18 +32,21 @@ public class CountByStatus extends Command {
      * @param interactiveStorage объект для взаимодействия с коллекцией
      */
     public void execute(UserInterface ui, String argument, InteractionInterface interactiveStorage, InetAddress address, int port, DataBaseCenter dbc, User user) {
-        try {
-            Status status = Status.valueOf(argument.toUpperCase());
-            long result = interactiveStorage.countByStatus(status);
-            ui.messageToClient("Элементов с таким статусом: " + result, address, port);
-            if (ui.isInteractionMode()) {
-                ui.messageToClient("Awaiting further client instructions.", address, port);
+        Thread response = new Thread(() -> {
+            try {
+                Status status = Status.valueOf(argument.toUpperCase());
+                long result = interactiveStorage.countByStatus(status);
+                ui.messageToClient("Элементов с таким статусом: " + result, address, port);
+                if (ui.isInteractionMode()) {
+                    ui.messageToClient("Awaiting further client instructions.", address, port);
+                }
+            } catch (IllegalArgumentException e) {
+                ui.messageToClient("Неверный аргумент команды", address, port);
+                if (ui.isInteractionMode()) {
+                    ui.messageToClient("Awaiting further client instructions.", address, port);
+                }
             }
-        } catch (IllegalArgumentException e) {
-            ui.messageToClient("Неверный аргумент команды", address, port);
-            if (ui.isInteractionMode()) {
-                ui.messageToClient("Awaiting further client instructions.", address, port);
-            }
-        }
+        });
+        response.start();
     }
 }

@@ -5,7 +5,7 @@ import commons.app.User;
 import commons.elements.Worker;
 import commons.utils.InteractionInterface;
 import commons.utils.UserInterface;
-import server.utils.DataBaseCenter;
+import commons.utils.DataBaseCenter;
 
 import java.net.InetAddress;
 
@@ -31,17 +31,19 @@ public class AddIfMin extends Command {
      * @param interactiveStorage объект для взаимодействия с коллекцией.
      */
     public void execute(UserInterface ui, InteractionInterface interactiveStorage, Worker worker, InetAddress address, int port, DataBaseCenter dbc, User user) {
-        int size1 = interactiveStorage.getSize();
-        interactiveStorage.addIfMin(worker);
-        int size2 = interactiveStorage.getSize();
-        if ((size2 > size1) && dbc.addWorker(worker, user)) {
-            ui.messageToClient("Элемент успешно добавлен", address, port);
-            dbc.retrieveCollectionFromDB(interactiveStorage);
-        }
-        else
-            ui.messageToClient("Элемент не добавлен, т.к. он не подходит критерию или уже содержится в базе", address, port);
-        if (ui.isInteractionMode()) {
-            ui.messageToClient("Awaiting further client instructions.", address, port);
-        }
+        Thread response = new Thread(() -> {
+            int size1 = interactiveStorage.getSize();
+            interactiveStorage.addIfMin(worker);
+            int size2 = interactiveStorage.getSize();
+            if ((size2 > size1) && dbc.addWorker(worker, user)) {
+                ui.messageToClient("Элемент успешно добавлен", address, port);
+                dbc.retrieveCollectionFromDB(interactiveStorage);
+            } else
+                ui.messageToClient("Элемент не добавлен, т.к. он не подходит критерию или уже содержится в базе", address, port);
+            if (ui.isInteractionMode()) {
+                ui.messageToClient("Awaiting further client instructions.", address, port);
+            }
+        });
+        response.start();
     }
 }

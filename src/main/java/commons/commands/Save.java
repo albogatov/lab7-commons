@@ -29,11 +29,14 @@ public class Save extends Command {
      * @param interactiveStorage объект для взаимодействия с коллекцией.
      */
     public void execute(UserInterface ui, InteractionInterface interactiveStorage, InetAddress address, int port, User user) {
-        interactiveStorage.save();
-        ui.messageToClient("Коллекция сохранена в файл", address, port);
-        if (ui.isInteractionMode()) {
-            ui.messageToClient("Awaiting further client instructions.", address, port);
-        }
+        Thread response = new Thread(() -> {
+            interactiveStorage.save();
+            ui.messageToClient("Коллекция сохранена в файл", address, port);
+            if (ui.isInteractionMode()) {
+                ui.messageToClient("Awaiting further client instructions.", address, port);
+            }
+        });
+        response.start();
     }
 
     public void execute(InteractionInterface interactiveStorage) {

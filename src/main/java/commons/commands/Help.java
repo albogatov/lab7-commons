@@ -5,7 +5,7 @@ import commons.app.CommandCenter;
 import commons.app.User;
 import commons.utils.InteractionInterface;
 import commons.utils.UserInterface;
-import server.utils.DataBaseCenter;
+import commons.utils.DataBaseCenter;
 
 import java.net.InetAddress;
 
@@ -31,14 +31,17 @@ public class Help extends Command {
      * @param interactiveStorage объект для взаимодействия с коллекцией.
      */
     public void execute(UserInterface ui, InteractionInterface interactiveStorage, InetAddress address, int port, DataBaseCenter dbc, User user) {
-        StringBuilder display = new StringBuilder();
-        for (Command cmd : CommandCenter.getInstance().retrieveAllCommands()) {
-            if (!cmd.getCommand().equals("save"))
-                display.append(cmd.getCommand()).append(": ").append(cmd.getHelp()).append("\n");
-        }
-        ui.messageToClient(display.toString(), address, port);
-        if (ui.isInteractionMode()) {
-            ui.messageToClient("Awaiting further client instructions.", address, port);
-        }
+        Thread response = new Thread(() -> {
+            StringBuilder display = new StringBuilder();
+            for (Command cmd : CommandCenter.getInstance().retrieveAllCommands()) {
+                if (!cmd.getCommand().equals("save"))
+                    display.append(cmd.getCommand()).append(": ").append(cmd.getHelp()).append("\n");
+            }
+            ui.messageToClient(display.toString(), address, port);
+            if (ui.isInteractionMode()) {
+                ui.messageToClient("Awaiting further client instructions.", address, port);
+            }
+        });
+        response.start();
     }
 }

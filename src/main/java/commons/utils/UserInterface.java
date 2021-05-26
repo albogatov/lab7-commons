@@ -1,7 +1,6 @@
 package commons.utils;
 
 import commons.elements.*;
-import server.Server;
 
 import java.io.*;
 import java.net.DatagramPacket;
@@ -19,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class UserInterface {
     private static final Logger logger = Logger.getLogger(
-            Server.class.getName());
+            ConnectionSource.class.getName());
     private final Console console;
     /**
      * Сканнер.

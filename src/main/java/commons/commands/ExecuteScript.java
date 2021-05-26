@@ -6,7 +6,7 @@ import commons.app.User;
 import commons.elements.Worker;
 import commons.utils.InteractionInterface;
 import commons.utils.UserInterface;
-import server.utils.DataBaseCenter;
+import commons.utils.DataBaseCenter;
 
 import java.io.*;
 import java.net.InetAddress;

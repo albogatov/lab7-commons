@@ -2,10 +2,10 @@ package commons.app;
 
 import commons.commands.*;
 import commons.elements.Worker;
+import commons.utils.ConnectionSource;
 import commons.utils.InteractionInterface;
 import commons.utils.UserInterface;
-import server.Server;
-import server.utils.DataBaseCenter;
+import commons.utils.DataBaseCenter;
 
 import java.net.InetAddress;
 import java.sql.Connection;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  */
 public class CommandCenter {
     private static final Logger logger = Logger.getLogger(
-            Server.class.getName());
+            ConnectionSource.class.getName());
     private static InetAddress clientAddress;
     private static int clientPort;
     private final ReentrantReadWriteLock collectionLock = new ReentrantReadWriteLock();

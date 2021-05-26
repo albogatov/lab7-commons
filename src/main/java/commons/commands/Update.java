@@ -5,7 +5,7 @@ import commons.app.User;
 import commons.elements.Worker;
 import commons.utils.InteractionInterface;
 import commons.utils.UserInterface;
-import server.utils.DataBaseCenter;
+import commons.utils.DataBaseCenter;
 
 import java.net.InetAddress;
 
@@ -32,15 +32,18 @@ public class Update extends Command {
      * @param interactiveStorage объект для взаимодействия с коллекцией.
      */
     public void execute(UserInterface ui, String argument, InteractionInterface interactiveStorage, Worker worker, InetAddress address, int port, DataBaseCenter dbc, User user) {
-        long id = Long.parseLong(argument);
-        System.out.println(id);
-        if (interactiveStorage.findById(id) && dbc.updateWorker(worker, id, user)) {
-            interactiveStorage.update(id, worker);
-            dbc.retrieveCollectionFromDB(interactiveStorage);
-            ui.messageToClient("Сотрудник обновлен", address, port);
-        } else ui.messageToClient("Сотрудника с таким идентификатором нет", address, port);
-        if (ui.isInteractionMode()) {
-            ui.messageToClient("Awaiting further client instructions.", address, port);
-        }
+        Thread response = new Thread(() -> {
+            long id = Long.parseLong(argument);
+            System.out.println(id);
+            if (interactiveStorage.findById(id) && dbc.updateWorker(worker, id, user)) {
+                interactiveStorage.update(id, worker);
+                dbc.retrieveCollectionFromDB(interactiveStorage);
+                ui.messageToClient("Сотрудник обновлен", address, port);
+            } else ui.messageToClient("Сотрудника с таким идентификатором нет", address, port);
+            if (ui.isInteractionMode()) {
+                ui.messageToClient("Awaiting further client instructions.", address, port);
+            }
+        });
+        response.start();
     }
 }
