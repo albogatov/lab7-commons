@@ -45,10 +45,6 @@ public class RemoveGreater extends Command {
                     else
                         ui.messageToClient("Не удалось удалить элемент", address, port);
                 }
-//            if (dbc.removeWorker(worker.getId(), user))
-//                ui.messageToClient("Операция успешно выполнена", address, port);
-//            else
-//                ui.messageToClient("Произошла ошибка при удалении", address, port);
                 dbc.retrieveCollectionFromDB(interactiveStorage);
             }
             if (ui.isInteractionMode()) {
