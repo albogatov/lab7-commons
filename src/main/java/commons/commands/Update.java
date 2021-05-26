@@ -34,7 +34,6 @@ public class Update extends Command {
     public void execute(UserInterface ui, String argument, InteractionInterface interactiveStorage, Worker worker, InetAddress address, int port, DataBaseCenter dbc, User user) {
         Thread response = new Thread(() -> {
             long id = Long.parseLong(argument);
-            System.out.println(id);
             if (interactiveStorage.findById(id) && dbc.updateWorker(worker, id, user)) {
                 interactiveStorage.update(id, worker);
                 dbc.retrieveCollectionFromDB(interactiveStorage);

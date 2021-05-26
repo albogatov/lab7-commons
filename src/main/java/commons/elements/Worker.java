@@ -2,8 +2,10 @@ package commons.elements;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -167,10 +169,12 @@ public class Worker implements Comparable<Worker>, Serializable {
         return creationDate.format(formatter);
     }
 
-    public String getCreationDate() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ssXXX");
-        return creationDate.format(formatter);
+    public ZonedDateTime getCreationDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss.S");
+//        return String.valueOf(ZonedDateTime.parse(creationDate.format(formatter), DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss.S", Locale.ENGLISH)));
+        return creationDate;
     }
+
     /**
      * Метод, возвращающий оклад сотрудника.
      *
@@ -189,7 +193,7 @@ public class Worker implements Comparable<Worker>, Serializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         if (this.endDate == null)
             return "null";
-        return "'" + this.endDate.format(formatter) + "'";
+        return this.endDate.format(formatter);
     }
 
     /**
@@ -230,7 +234,7 @@ public class Worker implements Comparable<Worker>, Serializable {
     public String getPositionString() {
         if (this.position == null)
             return "null";
-        else return "'" + this.position.toString() + "'";
+        else return this.position.toString();
     }
 
     /**
@@ -241,7 +245,7 @@ public class Worker implements Comparable<Worker>, Serializable {
     public String getStatusString() {
         if (getStatus() == null)
             return "null";
-        else return "'" + this.status.toString() + "'";
+        else return this.status.toString();
     }
 
     /**
@@ -272,7 +276,7 @@ public class Worker implements Comparable<Worker>, Serializable {
     public String getOrganizationNameString() {
         if (organization == null || organization.getOrganizationName() == null)
             return "null";
-        else return "'" + this.organization.getOrganizationName() + "'";
+        else return this.organization.getOrganizationName();
     }
 
     /**
@@ -294,7 +298,7 @@ public class Worker implements Comparable<Worker>, Serializable {
     public String getAnnualTurnoverString() {
         if (organization == null || organization.getAnnualTurnover() == null)
             return "null";
-        else return "'" + String.valueOf(organization.getAnnualTurnover()) + "'";
+        else return String.valueOf(organization.getAnnualTurnover());
     }
 
     /**
@@ -316,7 +320,7 @@ public class Worker implements Comparable<Worker>, Serializable {
     public String getOrganizationTypeString() {
         if (organization == null || organization.getOrganizationType() == null)
             return "null";
-        else return "'" + organization.getOrganizationType().toString() + "'";
+        else return organization.getOrganizationType().toString();
     }
 
     /**
@@ -338,7 +342,7 @@ public class Worker implements Comparable<Worker>, Serializable {
     public String getAddressStreet() {
         if (organization == null || organization.getPostalAddress() == null)
             return "null";
-        else return "'" + organization.getPostalAddress().getStreet() + "'";
+        else return organization.getPostalAddress().getStreet();
     }
 
     /**
@@ -349,11 +353,13 @@ public class Worker implements Comparable<Worker>, Serializable {
     public String getAddressZipCode() {
         if (organization == null || organization.getPostalAddress() == null)
             return "null";
-        else return "'" + organization.getPostalAddress().getZipCode() + "'";
+        else return organization.getPostalAddress().getZipCode();
     }
+
     public void setCreationDate(ZonedDateTime creationDate) {
         this.creationDate = creationDate;
     }
+
     /**
      * Метод, задающий ID рабочего.
      *
